@@ -34,7 +34,7 @@ GET CustomerSubscriptions
 ### Database Schema
 Teas - stores information about individual tea blends
 - Blend Name
-- Type (e.g.; "Black", "Green", "White", "Herbal", "Other")
+- Type (e.g.; "Black", "Green", "White", "Herbal", "Blended")
 - Description
 - Brew Temperature (in degrees Fahrenheit)
 - Brew Time (in minutes)
