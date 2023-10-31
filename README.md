@@ -34,7 +34,7 @@ GET CustomerSubscriptions
 ### Database Schema
 Teas - stores information about individual tea blends
 - Blend Name
-- Type (e.g.; "Black", "Green", "White", "Herbal", "Blended")
+- Tea Type (e.g.; "Black", "Green", "White", "Herbal", "Blended")
 - Description
 - Brew Temperature (in degrees Fahrenheit)
 - Brew Time (in minutes)
@@ -71,7 +71,7 @@ Brewing temperature and time for teas is usually based on the type of tea. For e
 Sometimes subscriptions can have different statuses. For example, it might be pending if a customer's credit card has not gone through. Or, it could be paused, such as if a customer is going out of town for a little while.
 
 #### Subscriptions
-Subscriptions can sometimes be seasonal. Maybe there are some subscriptions only available in spring/summer due to availability of ingredients. Or maybe there is an autumn special with a lot of cinnamon and pumpkin spice inspired blends. Appropriate columns could be added to the Subscriptions table to account for this.
+Subscriptions can sometimes be seasonal. Maybe there are some subscriptions only available in spring/summer due to availability of ingredients. Or maybe there is an autumn special with a lot of cinnamon and pumpkin spice inspired blends. Appropriate columns could be added to the Subscriptions table to account for this. On this note, a possible sad path to test for is when a customer tries to subscribe to a subscription that is not currently available.
 
 ### Endpoints
 - Create teas, subscriptions, and customers
