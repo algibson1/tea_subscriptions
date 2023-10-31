@@ -10,9 +10,18 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_10_31_201854) do
+ActiveRecord::Schema[7.0].define(version: 2023_10_31_202014) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "customer_subscriptions", force: :cascade do |t|
+    t.bigint "customer_id", null: false
+    t.bigint "subscription_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["customer_id"], name: "index_customer_subscriptions_on_customer_id"
+    t.index ["subscription_id"], name: "index_customer_subscriptions_on_subscription_id"
+  end
 
   create_table "customers", force: :cascade do |t|
     t.string "first_name"
@@ -53,6 +62,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_10_31_201854) do
     t.datetime "updated_at", null: false
   end
 
+  add_foreign_key "customer_subscriptions", "customers"
+  add_foreign_key "customer_subscriptions", "subscriptions"
   add_foreign_key "subscription_teas", "subscriptions"
   add_foreign_key "subscription_teas", "teas"
 end
