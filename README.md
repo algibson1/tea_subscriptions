@@ -48,7 +48,6 @@ Customers - stores information about individual customers
 Subscriptions - stores information about offered subscription packages
 - Name
 - Price
-- Status
 - Frequency
 
 SubscriptionTeas - associates subscriptions with the teas included in the subscription service
