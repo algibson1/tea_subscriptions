@@ -31,7 +31,7 @@ bundle exec rspec
 ### Database Schema
 Teas - stores information about individual tea blends
 - Blend Name
-- Type (e.g.; "Black", "Green", "White", "Herbal", "Mixed")
+- Type (e.g.; "Black", "Green", "White", "Herbal", "Other")
 - Description
 - Brew Temperature
 - Brew Time
@@ -57,3 +57,8 @@ SubscriptionTeas - associates subscriptions with the teas included in the subscr
 CustomerSubscriptions - associates customers with their subscriptions
 - Customer_id
 - Subscription_id
+
+
+## Thoughts For Future Work
+### Teas
+Brewing temperature and time for teas is usually based on the type of tea. For example, black and herbal teas are brewed at 200-212 F, whereas green teas are brewed at 160-180. Instead of having columns in the tea table for brewing instructions (where instructions will end up repetetive across all teas of the same type) this information could instead be extracted to a different table, such as "Brewing Instructions". Then, one row for black teas in Brewing Instructions could be associated with all black teas in the Teas table.
