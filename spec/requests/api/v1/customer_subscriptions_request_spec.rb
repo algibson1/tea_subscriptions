@@ -78,24 +78,77 @@ RSpec.describe "Customer Subscriptions Endpoints" do
         expect(@elly.subscriptions).to eq([@floral])
       end
 
-      xit "does not subscribe the customer if they are already subscribed" do
+      it "does not subscribe the customer if they already have an active subscription" do
         load_test_data 
 
         expect(@sally.subscriptions).to eq([@black, @fruity])
 
-        post "/api/v1/customers/#{@sally.id}/subscriptions", params: {subscription_id: @fruity.id}
+        post "/api/v1/customers/#{@sally.id}/subscriptions", params: {subscription_id: @black.id}
         expect(response).to_not be_successful
-        # expect(response.status).to eq()
+        expect(response.status).to eq(422)
+
+        error = JSON.parse(response.body, symbolize_names: true)
+        expected = {
+          errors: [
+            detail: "Validation failed: Customer is already subscribed!"
+          ]
+        }
+        expect(error).to eq(expected)
+      end
+
+      it "replaces a cancelled subscription if it exists" do
+        load_test_data 
+
+        get "/api/v1/customers/#{@sally.id}/subscriptions"
+        subscriptions = JSON.parse(response.body, symbolize_names: true)[:data]
+        expect(subscriptions.count).to eq(2)
+        expect(subscriptions.second[:id]).to eq(@fruity.id)
+        expect(subscriptions.second[:attributes][:status]).to eq("Cancelled")
+
+        post "/api/v1/customers/#{@sally.id}/subscriptions", params: {subscription_id: @fruity.id}
+        expect(response).to be_successful
+        expect(response.status).to eq(200)
+        expect(JSON.parse(response.body)["message"]).to eq("Successfully subscribed!")
+
+        get "/api/v1/customers/#{@sally.id}/subscriptions"
+        subscriptions = JSON.parse(response.body, symbolize_names: true)[:data]
+        expect(subscriptions.count).to eq(2)
+        expect(subscriptions.second[:id]).to eq(@fruity.id)
+        expect(subscriptions.second[:attributes][:status]).to eq("Active")
       end
     end
 
     context "given invalid customer or subscription" do
-      xit "returns an error if customer id is invalid" do
+      it "returns an error if customer id is invalid" do
+        load_test_data
 
+        post "/api/v1/customers/12324546/subscriptions", params: {subscription_id: @fruity.id}
+
+        expect(response).to_not be_successful 
+        expect(response.status).to eq(404)
+        error = JSON.parse(response.body, symbolize_names: true)
+        expected = {
+          errors: [
+            detail: "Couldn't find Customer with 'id'=12324546"
+          ]
+        }
+        expect(error).to eq(expected)
       end
 
-      xit "returns an error if subscription id is invalid" do
+      it "returns an error if subscription id is invalid" do
+        load_test_data
 
+        post "/api/v1/customers/#{@sally.id}/subscriptions", params: {subscription_id: 64534}
+
+        expect(response).to_not be_successful 
+        expect(response.status).to eq(404)
+        error = JSON.parse(response.body, symbolize_names: true)
+        expected = {
+          errors: [
+            detail: "Couldn't find Subscription with 'id'=64534"
+          ]
+        }
+        expect(error).to eq(expected)
       end
     end
   end
@@ -106,9 +159,9 @@ RSpec.describe "Customer Subscriptions Endpoints" do
         load_test_data
 
         get "/api/v1/customers/#{@sally.id}/subscriptions"
-        subscriptions = JSON.parse(response.body, symbolize_names: true)[:data]
-        expect(subscriptions.first[:id]).to eq(@black.id)
-        expect(subscriptions.first[:attributes][:status]).to eq("Active")
+        subscriptions1 = JSON.parse(response.body, symbolize_names: true)[:data]
+        expect(subscriptions1.first[:id]).to eq(@black.id)
+        expect(subscriptions1.first[:attributes][:status]).to eq("Active")
 
         patch "/api/v1/customers/#{@sally.id}/subscriptions/#{@black.id}", params: {status: "Cancelled"}
 
@@ -118,9 +171,9 @@ RSpec.describe "Customer Subscriptions Endpoints" do
         expect(message).to eq("Subscription Cancelled")
 
         get "/api/v1/customers/#{@sally.id}/subscriptions"
-        subscriptions = JSON.parse(response.body, symbolize_names: true)[:data]
-        expect(subscriptions.first[:id]).to eq(@black.id)
-        expect(subscriptions.first[:attributes][:status]).to eq("Cancelled")
+        subscriptions2 = JSON.parse(response.body, symbolize_names: true)[:data]
+        expect(subscriptions2.first[:id]).to eq(@black.id)
+        expect(subscriptions2.first[:attributes][:status]).to eq("Cancelled")
       end
 
       xit "can pause a subscription" do
