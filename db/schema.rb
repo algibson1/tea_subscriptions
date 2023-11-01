@@ -54,7 +54,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_10_31_202014) do
 
   create_table "teas", force: :cascade do |t|
     t.string "blend_name"
-    t.integer "type"
+    t.integer "tea_type"
     t.string "description"
     t.integer "brew_temperature"
     t.integer "brew_time"
