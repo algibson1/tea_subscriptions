@@ -83,3 +83,4 @@ Subscriptions can sometimes be seasonal. Maybe there are some subscriptions only
   - Ability to search for subscriptions by frequency, price, or teas included in them
 - Add or remove teas from a subscription package
 - List of teas, with subscriptions that include them
+- When a customer subscribes to a subscription they've previously subscribed to and then cancelled in the past, the status is updated on the old record, rather than the record being completely replaced by a new active subscription
