@@ -13,7 +13,7 @@ class CustomerSubscriptionsSerializer
             name: subscription.name,
             price: subscription.price,
             frequency: subscription.frequency,
-            status: CustomerSubscription.find_by(customer: @customer, subscription: subscription).status
+            status: subscription.status(@customer)
           }
         }
       end
