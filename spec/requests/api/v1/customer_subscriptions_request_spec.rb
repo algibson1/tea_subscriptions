@@ -48,9 +48,9 @@ RSpec.describe "Customer Subscriptions Endpoints" do
     end
   end
 
-  describe "destroy endpoint" do
+  describe "update endpoint" do
     context "given a valid customer and subscription" do
-      it "destroys an associatioin between a customer and a subscription (unsubscribes)" do
+      xit "can cancel a subscription" do
         load_test_data
 
         expect(@sally.subscriptions).to eq([@black, @fruity])
@@ -64,6 +64,10 @@ RSpec.describe "Customer Subscriptions Endpoints" do
         expect(@sally.subscriptions).to eq([@black])
       end
 
+      xit "can pause a subscription" do
+
+      end
+
       xit "returns an error if association does not exist" do
         
       end
@@ -75,6 +79,47 @@ RSpec.describe "Customer Subscriptions Endpoints" do
       end
 
       xit "returns an error if subscription doesn't exist" do
+
+      end
+    end
+  end
+
+  describe "Index endpoint" do
+    context "given a valid customer id" do
+      it "returns list of all customer's subscriptions, regardless of status" do
+        load_test_data 
+
+        get "/api/v1/customers/#{@sally.id}/subscriptions" 
+
+        expect(response).to be_successful
+        expect(response.status).to eq(200)
+
+        subscriptions = JSON.parse(response.body, symbolize_names: true)[:data]
+        expect(subscriptions).to be_an(Array)
+        expect(subscriptions.count).to eq(2)
+        expect(subscriptions.first[:id]).to eq(@black.id)
+        expect(subscriptions.first[:attributes][:name]).to eq(@black.name)
+        expect(subscriptions.first[:attributes][:status]).to eq("Active")
+        expect(subscriptions.second[:id]).to eq(@fruity.id)
+        expect(subscriptions.second[:attributes][:name]).to eq(@fruity.name)
+        expect(subscriptions.second[:attributes][:status]).to eq("Cancelled")
+      end
+
+      xit "might return an empty array if customer has no subscriptions" do
+        load_test_data 
+
+        get "/api/v1/customers/#{@junior.id}/subscriptions" 
+
+        expect(response).to be_successful
+        expect(response.status).to eq(200)
+
+        subscriptions = JSON.parse(response.body, symbolize_names: true)[:data]
+        expect(subscriptions).to eq([])
+      end
+    end
+
+    context "given invalid customer id" do
+      xit "throws an error that customer was not found" do
 
       end
     end
