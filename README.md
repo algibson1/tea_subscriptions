@@ -78,7 +78,8 @@ Subscriptions can sometimes be seasonal. Maybe there are some subscriptions only
 ### Endpoints
 - Create teas, subscriptions, and customers
 - Update details of teas, subscriptions, and customers
-- List of all available subscriptions and the teas belonging to them (so a user could browse and choose a subscription)
+  - Ability for customer to create a custom subscription of the specific teas they want. Subscription has column to denote whether it's a company-offered subscription package or a custom package, and custom packages do not show up in an index of subscriptions visible to other customers
+- Get list of all available subscriptions and the teas belonging to them (so a user could browse and choose a subscription)
   - Ability to search for subscriptions by frequency, price, or teas included in them
 - Add or remove teas from a subscription package
-- List of teas, with the subscriptions that include them
+- List of teas, with subscriptions that include them
