@@ -1,7 +1,7 @@
 class CustomerSubscription < ApplicationRecord
   belongs_to :customer
   belongs_to :subscription
-  validate :unique_or_inactive
+  validate :unique_or_inactive, on: :create
 
   enum status: %w(Active Cancelled Paused)
 
