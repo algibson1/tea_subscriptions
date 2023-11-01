@@ -39,9 +39,9 @@ def load_test_data
   SubscriptionTea.create!(subscription: @floral, tea: @clubs)
   SubscriptionTea.create!(subscription: @floral, tea: @ragdoll)
 
-  CustomerSubscription.create!(customer: @sally, subscription: @black)
-  CustomerSubscription.create!(customer: @sally, subscription: @fruity)
-  CustomerSubscription.create!(customer: @joseph, subscription: @black)
-  CustomerSubscription.create!(customer: @ally, subscription: @black)
-  CustomerSubscription.create!(customer: @ally, subscription: @floral)
+  CustomerSubscription.create!(customer: @sally, subscription: @black, status: "Active")
+  CustomerSubscription.create!(customer: @sally, subscription: @fruity, status: "Cancelled")
+  CustomerSubscription.create!(customer: @joseph, subscription: @black, status: "Active")
+  CustomerSubscription.create!(customer: @ally, subscription: @black, status: "Paused")
+  CustomerSubscription.create!(customer: @ally, subscription: @floral, status: "Active")
 end
