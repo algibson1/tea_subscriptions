@@ -1,13 +1,14 @@
 # Tea Subscriptions
 
-This project is a RESTful API to for a tea subscription service.
+This project is a RESTful API for a tea subscription service.
 
 ## Versions
-Ruby 3.2.2
-Rails 7.0.8
+- Ruby 3.2.2
+- Rails 7.0.8
 
 ## Installation
 Fork and clone this repository
+
 Install all gems
 ```
 bundle exec install
@@ -34,7 +35,7 @@ GET CustomerSubscriptions
 ### Database Schema
 Teas - stores information about individual tea blends
 - Blend Name
-- Tea Type (e.g.; "Black", "Green", "White", "Herbal", "Blended")
+- Tea Type ("Black", "Green", "White", "Herbal", or "Blended")
 - Description
 - Brew Temperature (in degrees Fahrenheit)
 - Brew Time (in minutes)
