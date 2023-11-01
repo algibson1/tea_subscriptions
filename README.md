@@ -17,19 +17,85 @@ Create the database
 ```
 rails db:{create,migrate}
 ```
-Run the test suite. There should be n passing tests
+Run the test suite. There should be 30 passing tests
 ```
 bundle exec rspec
-# input return here
+# 30 examples, 0 failures
 ```
 
 ## Endpoints
 ### Subscribe a customer to a subscription
-POST to CustomerSubscriptions
-### Cancel a customer's subscription
-DESTROY CustomerSubscriptions
+Creates a row on CustomerSubscriptions table to associate a customer with a subscription. Status of the subscription will be "Active" by default. 
+
+Example Request:
+```ruby
+post "/api/v1/customers/4/subscriptions", params: {subscription_id: 3}
+```
+Successful Response:
+```json
+{
+  "message": "Successfully subscribed!"
+}
+```
+
+### Update the status of a customer's subscription (Cancel or Pause)
+Updates the status of an existing subscription to "Cancelled" or "Paused".
+
+Example Request: 
+```ruby
+patch "/api/v1/customers/3/subscriptions/1", params: {status: "Cancelled"}
+```
+Successful Response:
+```json
+{
+    "message": "Subscription Cancelled"
+}
+```
+
 ### See all of a customer's subscriptions
-GET CustomerSubscriptions
+Returns list of all of a given customer's subscriptions, including their statuses.
+
+Example Request:
+```ruby
+get "/api/v1/customers/3/subscriptions" 
+```
+Example Response:
+```json
+{
+    "data": [
+        {
+            "id": 1,
+            "type": "subscription",
+            "attributes": {
+                "name": "Black Tea Pack",
+                "price": 20.37,
+                "frequency": "Monthly",
+                "status": "Cancelled"
+            }
+        },
+        {
+            "id": 2,
+            "type": "subscription",
+            "attributes": {
+                "name": "Green Tea Pack",
+                "price": 20.37,
+                "frequency": "Weekly",
+                "status": "Active"
+            }
+        },
+        {
+            "id": 3,
+            "type": "subscription",
+            "attributes": {
+                "name": "Fruity Tea Pack",
+                "price": 24.64,
+                "frequency": "Annual",
+                "status": "Cancelled"
+            }
+        }
+    ]
+}
+```
 
 ## Planning and Setup
 ### Database Schema
