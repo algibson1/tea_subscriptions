@@ -99,9 +99,12 @@ Example Response:
 
 ## Planning and Setup
 ### Database Schema
+
+![visual of schema design](/assets/images/tea_subscriptions_schema.png)
+
 Teas - stores information about individual tea blends
 - Blend Name
-- Tea Type ("Black", "Green", "White", "Herbal", or "Blended")
+- Tea Type ("Black", "Green", "White", "Herbal", "Blended")
 - Description
 - Brew Temperature (in degrees Fahrenheit)
 - Brew Time (in minutes)
