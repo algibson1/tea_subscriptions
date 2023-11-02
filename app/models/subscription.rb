@@ -5,6 +5,6 @@ class Subscription < ApplicationRecord
   has_many :customers, through: :customer_subscriptions
 
   def status(customer)
-    customer_subscriptions.where(customer_id: customer.id).pluck(:status).first
+    customer_subscriptions.where(customer: customer).pluck(:status).first
   end
 end
