@@ -64,7 +64,7 @@ Example Response:
 {
     "data": [
         {
-            "id": 1,
+            "id": "1",
             "type": "subscription",
             "attributes": {
                 "name": "Black Tea Pack",
@@ -74,7 +74,7 @@ Example Response:
             }
         },
         {
-            "id": 2,
+            "id": "2",
             "type": "subscription",
             "attributes": {
                 "name": "Green Tea Pack",
@@ -84,7 +84,7 @@ Example Response:
             }
         },
         {
-            "id": 3,
+            "id": "3",
             "type": "subscription",
             "attributes": {
                 "name": "Fruity Tea Pack",
