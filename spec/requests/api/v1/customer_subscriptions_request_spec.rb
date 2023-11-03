@@ -14,10 +14,10 @@ RSpec.describe "Customer Subscriptions Endpoints" do
         subscriptions = JSON.parse(response.body, symbolize_names: true)[:data]
         expect(subscriptions).to be_an(Array)
         expect(subscriptions.count).to eq(2)
-        expect(subscriptions.first[:id]).to eq(@black.id)
+        expect(subscriptions.first[:id]).to eq(@black.id.to_s)
         expect(subscriptions.first[:attributes][:name]).to eq(@black.name)
         expect(subscriptions.first[:attributes][:status]).to eq("Active")
-        expect(subscriptions.second[:id]).to eq(@fruity.id)
+        expect(subscriptions.second[:id]).to eq(@fruity.id.to_s)
         expect(subscriptions.second[:attributes][:name]).to eq(@fruity.name)
         expect(subscriptions.second[:attributes][:status]).to eq("Cancelled")
       end
@@ -102,7 +102,7 @@ RSpec.describe "Customer Subscriptions Endpoints" do
         get "/api/v1/customers/#{@sally.id}/subscriptions"
         subscriptions = JSON.parse(response.body, symbolize_names: true)[:data]
         expect(subscriptions.count).to eq(2)
-        expect(subscriptions.second[:id]).to eq(@fruity.id)
+        expect(subscriptions.second[:id]).to eq(@fruity.id.to_s)
         expect(subscriptions.second[:attributes][:status]).to eq("Cancelled")
 
         post "/api/v1/customers/#{@sally.id}/subscriptions", params: {subscription_id: @fruity.id}
@@ -113,7 +113,7 @@ RSpec.describe "Customer Subscriptions Endpoints" do
         get "/api/v1/customers/#{@sally.id}/subscriptions"
         subscriptions = JSON.parse(response.body, symbolize_names: true)[:data]
         expect(subscriptions.count).to eq(2)
-        expect(subscriptions.second[:id]).to eq(@fruity.id)
+        expect(subscriptions.second[:id]).to eq(@fruity.id.to_s)
         expect(subscriptions.second[:attributes][:status]).to eq("Active")
       end
     end
@@ -160,7 +160,7 @@ RSpec.describe "Customer Subscriptions Endpoints" do
 
         get "/api/v1/customers/#{@sally.id}/subscriptions"
         subscriptions1 = JSON.parse(response.body, symbolize_names: true)[:data]
-        expect(subscriptions1.first[:id]).to eq(@black.id)
+        expect(subscriptions1.first[:id]).to eq(@black.id.to_s)
         expect(subscriptions1.first[:attributes][:status]).to eq("Active")
 
         patch "/api/v1/customers/#{@sally.id}/subscriptions/#{@black.id}", params: {status: "Cancelled"}
@@ -172,7 +172,7 @@ RSpec.describe "Customer Subscriptions Endpoints" do
 
         get "/api/v1/customers/#{@sally.id}/subscriptions"
         subscriptions2 = JSON.parse(response.body, symbolize_names: true)[:data]
-        expect(subscriptions2.first[:id]).to eq(@black.id)
+        expect(subscriptions2.first[:id]).to eq(@black.id.to_s)
         expect(subscriptions2.first[:attributes][:status]).to eq("Cancelled")
       end
 
@@ -181,7 +181,7 @@ RSpec.describe "Customer Subscriptions Endpoints" do
 
         get "/api/v1/customers/#{@sally.id}/subscriptions"
         subscriptions1 = JSON.parse(response.body, symbolize_names: true)[:data]
-        expect(subscriptions1.first[:id]).to eq(@black.id)
+        expect(subscriptions1.first[:id]).to eq(@black.id.to_s)
         expect(subscriptions1.first[:attributes][:status]).to eq("Active")
 
         patch "/api/v1/customers/#{@sally.id}/subscriptions/#{@black.id}", params: {status: "Paused"}
@@ -193,7 +193,7 @@ RSpec.describe "Customer Subscriptions Endpoints" do
 
         get "/api/v1/customers/#{@sally.id}/subscriptions"
         subscriptions2 = JSON.parse(response.body, symbolize_names: true)[:data]
-        expect(subscriptions2.first[:id]).to eq(@black.id)
+        expect(subscriptions2.first[:id]).to eq(@black.id.to_s)
         expect(subscriptions2.first[:attributes][:status]).to eq("Paused")
       end
 

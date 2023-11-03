@@ -3,7 +3,7 @@ class Api::V1::CustomerSubscriptionsController < ApplicationController
   before_action :find_subscription, only: [:create, :update]
   
   def index 
-    render json: CustomerSubscriptionsSerializer.new(@customer).to_json
+    render json: SubscriptionSerializer.new(@customer.subscriptions, params: {customer: @customer})
   end
 
   def create 
